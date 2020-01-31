@@ -33,6 +33,7 @@ class Board extends React.Component {
             var row = Math.floor(Math.random() * this.state.rows);
             var col = Math.floor(Math.random() * this.state.columns);
             if (this.state.list[row + ',' + col].isMine) {
+                // here it need to be decrease to maintain the total number of mines
                 i--;
             } else {
                 this.state.list[row + ',' + col].isMine = true;
@@ -50,7 +51,7 @@ class Board extends React.Component {
                 list[data.x+','+data.y].mineCount = this.getMineCount(data.x, data.y);
 
                 if (list[data.x+','+data.y].mineCount === 0) {
-                    // then click through the neighbours
+                    // then click through the neighbours recursively
                     for (var i = Math.max(data.x-1,0); i <= Math.min(data.x+1, this.state.rows-1); i++) {
                         for(var j = Math.max(data.y-1,0); j <= Math.min(data.y+1, this.state.columns-1); j++) {
                             this.onItemClick(this.state.list[i + ',' + j]);
@@ -62,7 +63,7 @@ class Board extends React.Component {
                 this.setState({
                     list: list,
                 });
-
+                // it should have better approch so that the clicks value can be shown to user as well
                 this.countClick++;
             }
             
@@ -106,7 +107,6 @@ class Board extends React.Component {
                 }
             </div>
         )
-        
     }
 }
 
